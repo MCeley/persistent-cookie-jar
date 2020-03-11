@@ -1,5 +1,8 @@
 package com.aurasoftworks.cookiejar;
 
+import android.content.Context;
+
+import androidx.test.core.app.ApplicationProvider;
 
 import com.aurasoftworks.cookiejar.cache.SetCookieCache;
 import com.aurasoftworks.cookiejar.persistence.SharedPrefsCookiePersistor;
@@ -9,8 +12,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
-import org.robolectric.RuntimeEnvironment;
-import org.robolectric.annotation.Config;
 
 import java.util.Collections;
 import java.util.List;
@@ -21,22 +22,19 @@ import okhttp3.HttpUrl;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-/**
- * Created by Francisco J. Montiel on 11/02/16.
- */
 @RunWith(RobolectricTestRunner.class)
-@Config(manifest = Config.NONE)
 public class PersistentCookieJarTest {
 
     private PersistentCookieJar persistentCookieJar;
 
     private HttpUrl url = HttpUrl.parse("https://domain.com/");
+    private Context context = ApplicationProvider.getApplicationContext();
 
     @Before
     public void createCookieJar() {
         persistentCookieJar = new PersistentCookieJar(
                 new SetCookieCache(),
-                new SharedPrefsCookiePersistor(RuntimeEnvironment.application.getApplicationContext())
+                new SharedPrefsCookiePersistor(context)
         );
     }
 
@@ -77,7 +75,7 @@ public class PersistentCookieJarTest {
         persistentCookieJar.saveFromResponse(url, Collections.singletonList(newCookie));
 
         List<Cookie> storedCookies = persistentCookieJar.loadForRequest(url);
-        assertTrue(storedCookies.size() == 1);
+        assertEquals(storedCookies.size(), 1);
         assertEquals(newCookie, storedCookies.get(0));
     }
 
@@ -116,7 +114,7 @@ public class PersistentCookieJarTest {
 
         persistentCookieJar.clearSession();
 
-        assertTrue(persistentCookieJar.loadForRequest(url).size() == 1);
+        assertEquals(persistentCookieJar.loadForRequest(url).size(), 1);
         assertEquals(persistentCookieJar.loadForRequest(url).get(0), persistentCookie);
     }
 

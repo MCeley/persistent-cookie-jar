@@ -6,11 +6,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.robolectric.RobolectricTestRunner;
-import org.robolectric.RuntimeEnvironment;
-import org.robolectric.annotation.Config;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+
+import androidx.test.core.app.ApplicationProvider;
 
 import com.aurasoftworks.cookiejar.persistence.CookiePersistor;
 import com.aurasoftworks.cookiejar.persistence.SharedPrefsCookiePersistor;
@@ -26,13 +26,8 @@ import okhttp3.Cookie;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.reset;
 
-/**
- * Created by Francisco J. Montiel on 11/02/16.
- */
 @RunWith(RobolectricTestRunner.class)
-@Config(manifest = Config.NONE)
 public class SharedPrefsCookiePersistorTest {
 
     private CookiePersistor persistor;
@@ -40,7 +35,7 @@ public class SharedPrefsCookiePersistorTest {
 
     @Before
     public void createPersistor() {
-        sharedPreferences = Mockito.spy(RuntimeEnvironment.application.getApplicationContext().getSharedPreferences("CookiePersistence", Context.MODE_PRIVATE));
+        sharedPreferences = ApplicationProvider.getApplicationContext().getSharedPreferences("CookiePersistence", Context.MODE_PRIVATE);
         persistor = new SharedPrefsCookiePersistor(sharedPreferences);
     }
 
@@ -108,16 +103,20 @@ public class SharedPrefsCookiePersistorTest {
 
     @Test
     public void loadAll_WithCorruptedCookie_ShouldSkipCookie() {
+        SharedPreferences sharedPrefs = Mockito.spy(ApplicationProvider.getApplicationContext()
+                .getSharedPreferences("CookiePersistence", Context.MODE_PRIVATE));
+        CookiePersistor persist = new SharedPrefsCookiePersistor(sharedPrefs);
+
         Map<String, String> corruptedCookies = new HashMap<>();
         corruptedCookies.put("key", "invalidCookie_");
-        doReturn(corruptedCookies).when(sharedPreferences).getAll();
+        doReturn(corruptedCookies).when(sharedPrefs).getAll();
 
-        assertTrue(persistor.loadAll().isEmpty());
+        assertTrue(persist.loadAll().isEmpty());
     }
 
     @After
     public void clearPersistor() {
         persistor.clear();
-        reset(sharedPreferences);
+        sharedPreferences.edit().clear().apply();
     }
 }

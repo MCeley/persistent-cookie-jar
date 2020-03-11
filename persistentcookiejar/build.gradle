@@ -8,12 +8,15 @@ android {
 
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 29
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
 
         consumerProguardFiles 'consumer-rules.pro'
-        testOptions.unitTests.includeAndroidResources = true
+    }
+
+    testOptions {
+        unitTests.includeAndroidResources = true
     }
 
     buildTypes {
@@ -33,6 +36,7 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:3.10.0'
 
     testImplementation 'junit:junit:4.12'
-    testImplementation "org.robolectric:robolectric:4.3.1"
+    testImplementation 'androidx.test:core:1.2.0'
     testImplementation 'org.mockito:mockito-core:2.2.0'
+    testImplementation "org.robolectric:robolectric:4.3.1"
 }
