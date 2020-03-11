@@ -60,7 +60,7 @@ public class SharedPrefsCookiePersistor implements CookiePersistor {
         for (Cookie cookie : cookies) {
             editor.putString(createCookieKey(cookie), new SerializableCookie().encode(cookie));
         }
-        editor.commit();
+        editor.apply();
     }
 
     @Override
@@ -69,7 +69,7 @@ public class SharedPrefsCookiePersistor implements CookiePersistor {
         for (Cookie cookie : cookies) {
             editor.remove(createCookieKey(cookie));
         }
-        editor.commit();
+        editor.apply();
     }
 
     private static String createCookieKey(Cookie cookie) {
@@ -78,6 +78,6 @@ public class SharedPrefsCookiePersistor implements CookiePersistor {
 
     @Override
     public void clear() {
-        sharedPreferences.edit().clear().commit();
+        sharedPreferences.edit().clear().apply();
     }
 }

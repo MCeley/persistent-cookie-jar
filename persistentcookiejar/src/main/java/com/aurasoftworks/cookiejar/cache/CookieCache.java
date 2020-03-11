@@ -28,7 +28,7 @@ public interface CookieCache extends Iterable<Cookie> {
     /**
      * Add all the new cookies to the session, existing cookies will be overwritten.
      *
-     * @param cookies
+     * @param cookies {@link Cookie}s to add to a session.
      */
     void addAll(Collection<Cookie> cookies);
 

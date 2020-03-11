@@ -16,6 +16,8 @@
 
 package com.aurasoftworks.cookiejar;
 
+import androidx.annotation.NonNull;
+
 import com.aurasoftworks.cookiejar.cache.CookieCache;
 import com.aurasoftworks.cookiejar.persistence.CookiePersistor;
 
@@ -39,7 +41,7 @@ public class PersistentCookieJar implements ClearableCookieJar {
     }
 
     @Override
-    synchronized public void saveFromResponse(HttpUrl url, List<Cookie> cookies) {
+    synchronized public void saveFromResponse(@NonNull HttpUrl url, @NonNull List<Cookie> cookies) {
         cache.addAll(cookies);
         persistor.saveAll(filterPersistentCookies(cookies));
     }
@@ -56,7 +58,7 @@ public class PersistentCookieJar implements ClearableCookieJar {
     }
 
     @Override
-    synchronized public List<Cookie> loadForRequest(HttpUrl url) {
+    synchronized public List<Cookie> loadForRequest(@NonNull HttpUrl url) {
         List<Cookie> cookiesToRemove = new ArrayList<>();
         List<Cookie> validCookies = new ArrayList<>();
 
