@@ -16,10 +16,13 @@
 
 package com.aurasoftworks.cookiejar.cache;
 
+import androidx.annotation.NonNull;
+
 import java.util.Collection;
-import java.util.HashSet;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import okhttp3.Cookie;
 
@@ -28,7 +31,7 @@ public class SetCookieCache implements CookieCache {
     private Set<IdentifiableCookie> cookies;
 
     public SetCookieCache() {
-        cookies = new HashSet<>();
+        cookies = Collections.newSetFromMap(new ConcurrentHashMap<IdentifiableCookie, Boolean>());
     }
 
     @Override
@@ -45,6 +48,7 @@ public class SetCookieCache implements CookieCache {
     }
 
     @Override
+    @NonNull
     public Iterator<Cookie> iterator() {
         return new SetCookieCacheIterator();
     }
