@@ -21,8 +21,10 @@ import android.util.Log;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.ObjectStreamClass;
 import java.io.Serializable;
 
 import okhttp3.Cookie;
@@ -89,7 +91,7 @@ public class SerializableCookie implements Serializable {
         Cookie cookie = null;
         ObjectInputStream objectInputStream = null;
         try {
-            objectInputStream = new ObjectInputStream(byteArrayInputStream);
+            objectInputStream = new LegacyObjectInputStream(byteArrayInputStream);
             cookie = ((SerializableCookie) objectInputStream.readObject()).cookie;
         } catch (IOException e) {
             Log.d(TAG, "IOException in decodeCookie", e);
@@ -165,4 +167,19 @@ public class SerializableCookie implements Serializable {
         cookie = builder.build();
     }
 
+    private static class LegacyObjectInputStream extends ObjectInputStream {
+
+        LegacyObjectInputStream(InputStream in) throws IOException {
+            super(in);
+        }
+
+        @Override
+        protected ObjectStreamClass readClassDescriptor() throws ClassNotFoundException, IOException {
+            ObjectStreamClass desc = super.readClassDescriptor();
+            if(desc.getName().equals("com.franmontiel.persistentcookiejar.persistence.SerializableCookie")) {
+                return ObjectStreamClass.lookup(SerializableCookie.class);
+            }
+            return super.readClassDescriptor();
+        }
+    }
 }
