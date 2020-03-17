@@ -57,7 +57,7 @@ public class SetCookieCache implements CookieCache {
 
         private Iterator<IdentifiableCookie> iterator;
 
-        SetCookieCacheIterator() {
+        public SetCookieCacheIterator() {
             iterator = cookies.iterator();
         }
 
