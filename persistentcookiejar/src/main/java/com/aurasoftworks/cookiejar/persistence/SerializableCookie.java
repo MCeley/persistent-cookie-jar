@@ -179,7 +179,7 @@ public class SerializableCookie implements Serializable {
             if(desc.getName().equals("com.franmontiel.persistentcookiejar.persistence.SerializableCookie")) {
                 return ObjectStreamClass.lookup(SerializableCookie.class);
             }
-            return super.readClassDescriptor();
+            return desc;
         }
     }
 }
