@@ -30,8 +30,8 @@ import okhttp3.HttpUrl;
 
 public class PersistentCookieJar implements ClearableCookieJar {
 
-    private CookieCache cache;
-    private CookiePersistor persistor;
+    private final CookieCache cache;
+    private final CookiePersistor persistor;
 
     public PersistentCookieJar(CookieCache cache, CookiePersistor persistor) {
         this.cache = cache;
@@ -57,6 +57,7 @@ public class PersistentCookieJar implements ClearableCookieJar {
         return persistentCookies;
     }
 
+    @NonNull
     @Override
     synchronized public List<Cookie> loadForRequest(@NonNull HttpUrl url) {
         List<Cookie> cookiesToRemove = new ArrayList<>();

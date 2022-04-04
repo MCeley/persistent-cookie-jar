@@ -28,10 +28,10 @@ import okhttp3.Cookie;
 
 public class SetCookieCache implements CookieCache {
 
-    private Set<IdentifiableCookie> cookies;
+    private final Set<IdentifiableCookie> cookies;
 
     public SetCookieCache() {
-        cookies = Collections.newSetFromMap(new ConcurrentHashMap<IdentifiableCookie, Boolean>());
+        cookies = Collections.newSetFromMap(new ConcurrentHashMap<>());
     }
 
     @Override
@@ -55,7 +55,7 @@ public class SetCookieCache implements CookieCache {
 
     private class SetCookieCacheIterator implements Iterator<Cookie> {
 
-        private Iterator<IdentifiableCookie> iterator;
+        private final Iterator<IdentifiableCookie> iterator;
 
         public SetCookieCacheIterator() {
             iterator = cookies.iterator();
