@@ -16,7 +16,6 @@
 
 package com.aurasoftworks.cookiejar.persistence;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 
@@ -27,7 +26,6 @@ import java.util.Map;
 
 import okhttp3.Cookie;
 
-@SuppressLint("CommitPrefEdits")
 public class SharedPrefsCookiePersistor implements CookiePersistor {
 
     private final SharedPreferences sharedPreferences;
