@@ -45,11 +45,13 @@ dependencies {
 Create an instance of `PersistentCookieJar` passing a `CookieCache` and a `CookiePersistor`:
 
 ```java
-ClearableCookieJar cookieJar =
-                new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(context));
+ClearableCookieJar cookieJar = new PersistentCookieJar(
+    new SetCookieCache(), 
+    new SharedPrefsCookiePersistor(context)
+);
 ```
 
-Then just add the CookieJar when building your OkHttp client:
+Then just add the `CookieJar` when building your `OkHttpClient`:
 
 ```java
 OkHttpClient okHttpClient = new OkHttpClient.Builder()
