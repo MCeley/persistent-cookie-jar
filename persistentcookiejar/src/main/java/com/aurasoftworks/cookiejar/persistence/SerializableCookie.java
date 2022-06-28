@@ -1,5 +1,8 @@
 /*
  * Copyright (C) 2016 Francisco José Montiel Navarro.
+ * Copyright (C) 2022 Michael Celey
+ * 
+ * Derivative work changes package name and adds compatibility with original work.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
