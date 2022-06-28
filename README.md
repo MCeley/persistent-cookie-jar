@@ -7,7 +7,7 @@
 A persistent CookieJar implementation based on [PersistentCookieJar](https://github.com/franmontiel/PersistentCookieJar) by [franmontiel](https://github.com/franmontiel).
 
 ## Download
----
+
 ### Step 1. 
 
 ### Prior to Gradle 7.0: 
@@ -39,8 +39,9 @@ dependencies {
     implementation 'com.github.MCeley:persistent-cookie-jar:1.4.0'
 }
 ```
-Usage
------
+
+## Usage
+
 Create an instance of `PersistentCookieJar` passing a `CookieCache` and a `CookiePersistor`:
 
 ```java
@@ -57,7 +58,7 @@ OkHttpClient okHttpClient = new OkHttpClient.Builder()
 ```
 
 ## License
----
+
     Copyright 2016 Francisco José Montiel Navarro
     Copyright 2022 Michael Celey
 
